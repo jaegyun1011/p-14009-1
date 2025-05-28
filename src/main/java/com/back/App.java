@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    private static final int MAX_NUM = 1000;
-
     private Scanner scanner;
     private List<WiseSaying> db;
     private int num;
@@ -41,7 +39,7 @@ public class App {
         scanner.close();
     }
 
-    public void cmdAdd() {
+    private void cmdAdd() {
         System.out.print("명언 : ");
         String content = scanner.nextLine().trim();
         System.out.print("작가 : ");
@@ -50,7 +48,7 @@ public class App {
         System.out.println(num + "번 명언이 등록되었습니다.");
     }
 
-    public void cmdUpdate(String[] param) {
+    private void cmdUpdate(String[] param) {
         int id;
         try {
             id = Integer.parseInt(param[0].split("=")[1]);
@@ -74,7 +72,7 @@ public class App {
         db.get(id).setAuthor(input);
     }
 
-    public void cmdRemove(String[] param) {
+    private void cmdRemove(String[] param) {
         int id;
         try {
             id = Integer.parseInt(param[0].split("=")[1]);
@@ -91,7 +89,7 @@ public class App {
         System.out.println(id + "번 명언이 삭제되었습니다.");
     }
 
-    public void cmdList(String[] param) {
+    private void cmdList(String[] param) {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
         for(int i=num; i>0; i--) {
