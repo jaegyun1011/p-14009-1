@@ -22,15 +22,15 @@ public class App {
         System.out.println("== 명언 앱 ==");
         while(!exit) {
             System.out.print("명령) ");
-            String input = scanner.nextLine().trim();
-            String cmd = input.split("\\?")[0];
-            String[] param = input.contains("?") ? input.split("\\?")[1].split("&") : new String[]{};
+            Rq rq = new Rq(scanner.nextLine().trim());
+            //String cmd = input.split("\\?")[0];
+            //String[] param = input.contains("?") ? input.split("\\?")[1].split("&") : new String[]{};
 
-            switch(cmd) {
+            switch(rq.getCmd()) {
                 case "등록" -> cmdAdd();
-                case "삭제" -> cmdRemove(param);
-                case "수정" -> cmdUpdate(param);
-                case "목록" -> cmdList(param);
+                case "삭제" -> cmdRemove(rq);
+                case "수정" -> cmdUpdate(rq);
+                case "목록" -> cmdList(rq);
                 case "종료" -> exit = true;
                 default -> System.out.println("잘못된 명령어입니다.");
             }
@@ -48,14 +48,16 @@ public class App {
         System.out.println(num + "번 명언이 등록되었습니다.");
     }
 
-    private void cmdUpdate(String[] param) {
+    private void cmdUpdate(Rq rq) {
         int id;
+
         try {
-            id = Integer.parseInt(param[0].split("=")[1]);
+            id = Integer.parseInt(rq.getParam("id"));
         } catch (Exception e) {
             System.out.println("ID를 올바르게 입력해주세요.");
             return;
         }
+
         if (id > num || db.get(id).getId() == -1) {
             System.out.println(id + "번 명언은 존재하지 않습니다.");
             return;
@@ -72,14 +74,16 @@ public class App {
         db.get(id).setAuthor(input);
     }
 
-    private void cmdRemove(String[] param) {
+    private void cmdRemove(Rq rq) {
         int id;
+
         try {
-            id = Integer.parseInt(param[0].split("=")[1]);
+            id = Integer.parseInt(rq.getParam("id"));
         } catch (Exception e) {
             System.out.println("ID를 올바르게 입력해주세요.");
             return;
         }
+
         if (id > num || db.get(id).getId() == -1) {
             System.out.println(id + "번 명언은 존재하지 않습니다.");
             return;
@@ -89,7 +93,7 @@ public class App {
         System.out.println(id + "번 명언이 삭제되었습니다.");
     }
 
-    private void cmdList(String[] param) {
+    private void cmdList(Rq rq) {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
         for(int i=num; i>0; i--) {

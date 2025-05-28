@@ -5,7 +5,7 @@ public class WiseSaying {
     private String content;
     private String author;
 
-    public WiseSaying(int id, String content, String author) {
+    WiseSaying(int id, String content, String author) {
         setId(id);
         setContent(content);
         setAuthor(author);
